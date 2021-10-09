@@ -11,7 +11,7 @@ typedef enum {
 
 typedef enum {
     ERROR = -1,
-    PRIMING = 1,  // грунт
+    PRIMING = 1, // грунт
     GRASS,
     ASPHALT,
     CONCRETE,
@@ -26,10 +26,10 @@ typedef struct {
 
 typedef struct rdlist_s {
     rdnetwork_t data;
-    struct rdlist_s *next;
+    struct rdlist_s* next;
 } rdlist_t;
 
-extern rdlist_t *rdroot;
+extern rdlist_t* rdroot;
 
 void appendroad(rdnetwork_t node);
 void freenetwork();

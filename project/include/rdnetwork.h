@@ -3,7 +3,7 @@
 
 #include "rdlist.h"
 
-rdtype_e gettype(char *type);
+rdtype_e gettype(char* type);
 void addnetwork();
 rdquality_e getrdquality(rdtype_e type, unsigned int numlanes);
 
