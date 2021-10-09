@@ -24,13 +24,13 @@ void addnetwork()
     appendroad((rdnetwork_t){3001,  PRIMING,    BAD,        1});
     appendroad((rdnetwork_t){2000,  PRIMING,    TERRIBLE,   1});
     appendroad((rdnetwork_t){4000,  PRIMING,    BAD,        1});
-    appendroad((rdnetwork_t){3000,  PRIMING,    TERRIBLE,        1});
+    appendroad((rdnetwork_t){3000,  PRIMING,    TERRIBLE,   1});
     appendroad((rdnetwork_t){2000,  PRIMING,    NORM,       2});
 
     appendroad((rdnetwork_t){1500,  GRASS,      TERRIBLE,   1});
     appendroad((rdnetwork_t){3600,  GRASS,      BAD,        1});
     appendroad((rdnetwork_t){7080,  GRASS,      TERRIBLE,   1});
-    appendroad((rdnetwork_t){1000,  GRASS,      BAD,        1});
+    appendroad((rdnetwork_t){1000,  GRASS,      TERRIBLE,   1});
     appendroad((rdnetwork_t){500,   GRASS,      BAD,        2});
 
     appendroad((rdnetwork_t){5100,  ASPHALT,    NORM,       2});

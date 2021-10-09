@@ -1,7 +1,12 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 project(Task1)
 
-add_library(foo STATIC project/src/rdnetwork.c)
-add_executable(main project/src/main.c)
-target_link_libraries(main foo)
+set(CMAKE_CXX_STANDART 14)
+
+include_directories("${PROJECT_SOURCE_DIR}/project/include")
+file(GLOB sources
+    "${PROJECT_SOURCE_DIR}/project/include/*.h"
+    "${PROJECT_SOURCE_DIR}/project/src/*.c")
+
+add_executable(main ${sources})
