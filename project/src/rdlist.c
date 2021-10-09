@@ -28,3 +28,19 @@ void appendroad(rdnetwork_t node)
     tmp->data.numlanes = node.numlanes;
     tmp->next = NULL;
 }
+
+void freenetwork()
+{
+    rdlist_t *delr1 = rdroot;
+    rdlist_t *delr2 = rdroot;
+    if(rdroot)
+        delr2 = delr2->next;
+    while(delr1)
+    {
+        free(delr1);
+        delr1 = delr2;
+        if(delr2)
+            delr2 = delr2->next;
+    }
+    rdroot = NULL;
+}

@@ -15,5 +15,7 @@ int main(int argc, char *argv[])
         return err_input(argv[0]);
     
     printf("%d\n", getrdquality(type, atoi(argv[2])));
+    freenetwork();
+
     return 0;
 }

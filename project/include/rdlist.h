@@ -32,5 +32,6 @@ typedef struct rdlist_s {
 extern rdlist_t *rdroot;
 
 void appendroad(rdnetwork_t node);
+void freenetwork();
 
 #endif
