@@ -19,16 +19,15 @@ addons:
       - cmake
 
 script:
-  - ./linters/run.sh --local
   - mkdir build
   - cd build
   - cmake ..
   - make
   - ctest --output-on-failure
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ctest; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ./task1.out; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ./task1.out grass 1; fi
   - cd ..
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --enable=all --error-exitcode=1 -I include ./project/tst ./project/src ./project/include/*.h --check-config ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --error-exitcode=1 -I project/include ./project/tst ./project/src ./project/include/*.h; fi
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)
