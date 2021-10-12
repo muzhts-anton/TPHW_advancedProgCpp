@@ -31,16 +31,15 @@ before_script:
   - cd "${TRAVIS_BUILD_DIR}"
   - cmake .
   - make
-  - ./test.out
+  - ctest --output-on-failure
 
 script:
   - mkdir build
   - cd build
-  - sudo apt install libgtest-dev
   - cmake ..
   - make
-  - ./test.out --output-on-failure
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ./test.out; fi
+  - ctest --output-on-failure
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ctest; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ./task1.out grass 1; fi
   - cd ..
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --error-exitcode=1 -I project/include ./project/tst ./project/src ./project/include/*.h; fi
