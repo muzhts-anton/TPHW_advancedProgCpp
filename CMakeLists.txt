@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.8)
 project(Task1)
 
 set(CMAKE_C_FLAGS "--coverage")
