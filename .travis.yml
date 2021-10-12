@@ -11,7 +11,7 @@ compiler:
 
 env:
   global:
-    - CODECOV_TOKEN='4a026a83-7947-490c-ae79-5046e4773a2d'
+    - CODECOV_TOKEN='6475c4fa-df17-453a-bf76-5c2257519430'
 
 addons:
   apt:
