@@ -5,7 +5,7 @@ extern "C" {
 #include "rdnetwork.h"
 }
 
-TEST(RDTEST, Assert_3)
+TEST(RDTEST, Assert_2_3_1)
 {
     appendroad((rdnetwork_t){999, PRIMING, TERRIBLE,    4});
     appendroad((rdnetwork_t){998, PRIMING, BAD,         4});
@@ -26,7 +26,7 @@ TEST(RDTEST, Assert_3)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_2)
+TEST(RDTEST, Assert_2_2_1)
 {
     appendroad((rdnetwork_t){999, PRIMING, TERRIBLE,    4});
     appendroad((rdnetwork_t){998, PRIMING, BAD,         4});
@@ -47,7 +47,7 @@ TEST(RDTEST, Assert_2)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3g)
+TEST(RDTEST, Assert_2_3_2)
 {
     appendroad((rdnetwork_t){999, GRASS,    TERRIBLE,    4});  //
     appendroad((rdnetwork_t){998, PRIMING,  BAD,         4});
@@ -68,7 +68,7 @@ TEST(RDTEST, Assert_3g)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3gg)
+TEST(RDTEST, Assert_2_4_1)
 {
     appendroad((rdnetwork_t){999, GRASS,    TERRIBLE,    4});  //
     appendroad((rdnetwork_t){998, PRIMING,  BAD,         4});
@@ -94,7 +94,7 @@ TEST(RDTEST, Assert_3gg)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3pe)
+TEST(RDTEST, Assert_2_5_1)
 {
     appendroad((rdnetwork_t){999, GRASS,    TERRIBLE,    4});  //
     appendroad((rdnetwork_t){998, PRIMING,  BAD,         4});
@@ -120,7 +120,7 @@ TEST(RDTEST, Assert_3pe)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3e)
+TEST(RDTEST, Assert_2_m1_1)
 {
     appendroad((rdnetwork_t){999, GRASS,    TERRIBLE,    4});  //
     appendroad((rdnetwork_t){998, PRIMING,  BAD,         4});

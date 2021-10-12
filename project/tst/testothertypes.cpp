@@ -5,7 +5,7 @@ extern "C" {
 #include "rdnetwork.h"
 }
 
-TEST(RDTEST, Assert_3)
+TEST(RDTEST, Assert_3_3_1)
 {
     appendroad((rdnetwork_t){999, ASPHALT, BAD,    3});
     appendroad((rdnetwork_t){998, ASPHALT, NORM,   3});
@@ -16,7 +16,7 @@ TEST(RDTEST, Assert_3)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_2)
+TEST(RDTEST, Assert_3_4_1)
 {
     appendroad((rdnetwork_t){999, CONCRETE, BAD,    3});
     appendroad((rdnetwork_t){998, ASPHALT, NORM,    3});
@@ -27,7 +27,7 @@ TEST(RDTEST, Assert_2)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3g)
+TEST(RDTEST, Assert_3_5_1)
 {
     appendroad((rdnetwork_t){999, CONCRETE, GREAT, 2});
     appendroad((rdnetwork_t){919, CONCRETE, GREAT, 2});
@@ -38,7 +38,7 @@ TEST(RDTEST, Assert_3g)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3gg)
+TEST(RDTEST, Assert_3_4_2)
 {
     appendroad((rdnetwork_t){999, GRASS,    TERRIBLE,    1});
     appendroad((rdnetwork_t){998, ASPHALT,  BAD,         3});
@@ -51,7 +51,7 @@ TEST(RDTEST, Assert_3gg)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3pe)
+TEST(RDTEST, Assert_3_1_1)
 {
     appendroad((rdnetwork_t){999, GRASS,    TERRIBLE,    1});
     appendroad((rdnetwork_t){998, ASPHALT,  BAD,         3});
@@ -64,7 +64,7 @@ TEST(RDTEST, Assert_3pe)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3e)
+TEST(RDTEST, Assert_3_2_1)
 {
     appendroad((rdnetwork_t){999, GRASS,    TERRIBLE,    1});
     appendroad((rdnetwork_t){998, ASPHALT,  BAD,         3});
@@ -77,7 +77,7 @@ TEST(RDTEST, Assert_3e)
     freenetwork();
 }
 
-TEST(RDTEST, Assert_3e)
+TEST(RDTEST, Assert_3_m1_1)
 {
     appendroad((rdnetwork_t){999, GRASS,    TERRIBLE,    1});
     appendroad((rdnetwork_t){998, ASPHALT,  BAD,         3});
