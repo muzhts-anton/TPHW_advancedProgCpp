@@ -28,7 +28,7 @@ add_executable(task1.out ${sources})
 ### testint the testing system lmao
 enable_testing()
 find_package(GTest REQUIRED)
-find_library(PTHREAD_LIBRARY pthread)
+find_package(Threads REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 add_library(rdnet STATIC ${PROJECT_SOURCE_DIR}/project/src/rdlist.c ${PROJECT_SOURCE_DIR}/project/src/rdnetwork.c)
 add_executable(test.out ${PROJECT_SOURCE_DIR}/project/tst/main.cpp)
