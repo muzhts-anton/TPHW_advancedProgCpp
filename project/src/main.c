@@ -14,7 +14,14 @@ int main(int argc, char* argv[])
     if (type == ERROR)
         return err_input(argv[0]);
 
-    printf("%d\n", getrdquality(type, atoi(argv[2])));
+    switch(getrdquality(type, atoi(argv[2]))) {
+        case TERRIBLE: printf("TERRIBLE\n"); break;
+        case BAD: printf("BAD\n"); break;
+        case NORM: printf("NORM\n"); break;
+        case GOOD: printf("GOOD\n"); break;
+        case GREAT: printf("GREAT\n"); break;
+        default: printf("ERROR\n");
+    }
     freenetwork();
 
     return 0;
