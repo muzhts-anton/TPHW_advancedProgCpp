@@ -22,17 +22,6 @@ addons:
       - make
       - cmake
 
-before_script:
-  - sudo apt-get install -y libgtest-dev
-  - cd /usr/src/gtest
-  - sudo cmake CMakeLists.txt
-  - sudo make
-  - sudo cp *.a /usr/lib
-  - cd "${TRAVIS_BUILD_DIR}"
-  - cmake .
-  - make
-  - ctest --output-on-failure
-
 script:
   - mkdir build
   - cd build
