@@ -25,10 +25,10 @@ addons:
 script:
   - mkdir build
   - cd build
-  - cmake ..
-  - make
   - sudo apt install pthread
   - sudo apt install libgtest-dev
+  - cmake ..
+  - make
   - ./test.out --output-on-failure
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ./test.out; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ./task1.out grass 1; fi
