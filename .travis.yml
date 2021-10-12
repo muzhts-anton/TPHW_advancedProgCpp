@@ -9,6 +9,10 @@ os:
 compiler:
   - gcc
 
+env:
+  global:
+    - CODECOV_TOKEN='4a026a83-7947-490c-ae79-5046e4773a2d'
+
 addons:
   apt:
     packages:
@@ -23,8 +27,10 @@ script:
   - cd build
   - cmake ..
   - make
-  - ctest --output-on-failure
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ctest; fi
+  - sudo apt install pthread
+  - sudo apt install libgtest-dev
+  - ./test.out --output-on-failure
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ./test.out; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=yes ./task1.out grass 1; fi
   - cd ..
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --error-exitcode=1 -I project/include ./project/tst ./project/src ./project/include/*.h; fi
