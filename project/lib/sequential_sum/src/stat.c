@@ -1,4 +1,5 @@
 #include "stat.h"
+
 #include <stdio.h>
 
 
@@ -12,15 +13,14 @@ const int A[MSIZE][MSIZE] = {
     { 7, 6, 5, 4, 3, 2, 1 },
 };
 
-int stat()
+int *mystat()
 {
-    int B[MSIZE * 2 - 1] = { 0 };
+    int *B = (int *)calloc(MSIZE * 2 - 1, sizeof(int));
 
     size_t i = 0, d = 0;
     while (d < MSIZE) {
         while (i + d < MSIZE) {
             B[(MSIZE - 1) + d] += A[i][i + d];
-            printf("%d ", A[i][i + d]);
             ++i;
         }
         printf("\n");
@@ -31,9 +31,5 @@ int stat()
     for (size_t i = 0; i < (MSIZE * 2 - 1) / 2; ++i)
         B[i] = B[i + MSIZE - 1];
 
-    for (size_t i = 0; i < (MSIZE * 2 - 1); ++i)
-        printf("%d ", B[i]);
-    printf("\n");
-
-    return 0;
+    return B;
 }

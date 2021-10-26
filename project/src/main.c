@@ -2,5 +2,7 @@
 
 int main()
 {
-    return stat();
+    int *tmp = mystat();
+    free(tmp);
+    return 0;
 }
