@@ -2,34 +2,33 @@
 
 #include <stdio.h>
 
-
-const int A[MSIZE][MSIZE] = {
-    { 1, 2, 3, 4, 5, 6, 7 },
-    { 2, 1, 2, 3, 4, 5, 6 },
-    { 3, 2, 1, 2, 3, 4, 5 },
-    { 4, 3, 2, 1, 2, 3, 4 },
-    { 5, 4, 3, 2, 1, 2, 3 },
-    { 6, 5, 4, 3, 2, 1, 2 },
-    { 7, 6, 5, 4, 3, 2, 1 },
-};
-
-int *mystat()
+/*
+00 01 02
+10 11 12
+20 21 22
+*/
+error_e initsum(matrix_t* obj)
 {
-    int *B = (int *)calloc(MSIZE * 2 - 1, sizeof(int));
+    int* tsum = (int*)calloc(obj->dim * 2 - 1, sizeof(int));
 
-    size_t i = 0, d = 0;
-    while (d < MSIZE) {
-        while (i + d < MSIZE) {
-            B[(MSIZE - 1) + d] += A[i][i + d];
-            ++i;
-        }
-        printf("\n");
-        ++d;
-        i = 0;
+    if (obj->dim == 1) {
+        tsum[0] = obj->matrix[0][0];
+        return NO_ERROR;
     }
 
-    for (size_t i = 0; i < (MSIZE * 2 - 1) / 2; ++i)
-        B[i] = B[i + MSIZE - 1];
+    size_t d = 0;
+    while (d < obj->dim) {
+        for (size_t i = 0; i + d < obj->dim; ++i)
+            tsum[(obj->dim - 1) + d] += obj->matrix[i][i + d];
 
-    return B;
+        for (size_t i = 0; i + d < obj->dim; ++i)
+            if (i + d != i)
+                tsum[(obj->dim - 1) - d] += obj->matrix[i + d][i];
+
+        ++d;
+    }
+
+    obj->dsum = tsum;
+
+    return NO_ERROR;
 }

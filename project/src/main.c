@@ -1,8 +1,18 @@
+#include "parser.h"
 #include "stat.h"
 
-int main()
+#include <stdio.h>
+
+int main(int argc, char* argv[])
 {
-    int *tmp = mystat();
-    free(tmp);
+    matrix_t* testmat = getmatrix(argv[1]);
+    initsum(testmat);
+
+    for (size_t i = 0; i < 7; ++i)
+        printf("%d ", testmat->dsum[i]);
+    printf("\n");
+
+    deinit(testmat);
+
     return 0;
 }
