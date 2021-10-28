@@ -5,6 +5,9 @@ project(pro)
 # add_compile_options(--coverage)
 # add_link_options(--coverage)
 
+# add_compile_options(-fno-omit-frame-pointer -fsanitize=address)
+# add_link_options(-fsanitize=address)
+
 find_package(GTest)
 enable_testing()
 

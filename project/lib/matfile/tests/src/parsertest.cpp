@@ -2,44 +2,45 @@
 
 extern "C" {
 #include "parser.h"
-#include "stat.h"
 }
 
 #include <stdio.h>
 
-TEST(STAT, Assert_1)
+TEST(PARSER, Assert_1)
 {
-    const char filename[] = "test11.txt";
+    const char filename[] = "test01.txt";
     FILE* testfile = fopen(filename, "w");
     const char matrix[] = "1\n\n";
     fwrite(matrix, (int)sizeof(matrix) - 1, 1, testfile);
     fclose(testfile);
 
     matrix_t* test = getmatrix(filename);
-    initsum(test);
 
-    EXPECT_EQ(test->dsum[0], 1);
+    EXPECT_EQ(test->matrix[0][0], 1);
 
     deinit(test);
     free(test);
 }
 
-TEST(STAT, Assert_2)
+TEST(PARSER, Assert_2)
 {
-    const char filename[] = "test12.txt";
+    const char filename[] = "test02.txt";
     FILE* testfile = fopen(filename, "w");
     const char matrix[] = "1 2 3\n4 5 6\n7 8 9\n\n";
     fwrite(matrix, (int)sizeof(matrix) - 1, 1, testfile);
     fclose(testfile);
 
     matrix_t* test = getmatrix(filename);
-    initsum(test);
 
-    EXPECT_EQ(test->dsum[0], 7);
-    EXPECT_EQ(test->dsum[1], 12);
-    EXPECT_EQ(test->dsum[2], 15);
-    EXPECT_EQ(test->dsum[3], 8);
-    EXPECT_EQ(test->dsum[4], 3);
+    EXPECT_EQ(test->matrix[0][0], 1);
+    EXPECT_EQ(test->matrix[0][1], 2);
+    EXPECT_EQ(test->matrix[0][2], 3);
+    EXPECT_EQ(test->matrix[1][0], 4);
+    EXPECT_EQ(test->matrix[1][1], 5);
+    EXPECT_EQ(test->matrix[1][2], 6);
+    EXPECT_EQ(test->matrix[2][0], 7);
+    EXPECT_EQ(test->matrix[2][1], 8);
+    EXPECT_EQ(test->matrix[2][2], 9);
 
     deinit(test);
     free(test);

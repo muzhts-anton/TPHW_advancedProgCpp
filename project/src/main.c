@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
     printf("\n");
 
     deinit(testmat);
+    free(testmat);
 
     return 0;
 }

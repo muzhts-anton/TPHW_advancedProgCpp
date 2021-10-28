@@ -2,17 +2,13 @@
 
 #include <stdio.h>
 
-/*
-00 01 02
-10 11 12
-20 21 22
-*/
 error_e initsum(matrix_t* obj)
 {
     int* tsum = (int*)calloc(obj->dim * 2 - 1, sizeof(int));
 
     if (obj->dim == 1) {
         tsum[0] = obj->matrix[0][0];
+        obj->dsum = tsum;
         return NO_ERROR;
     }
 
