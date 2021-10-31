@@ -6,10 +6,14 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#define unlikely(expr) __builtin_expect(!!(expr), 0)
+#define likely(expr) __builtin_expect(!!(expr), 1)
+
+
 error_e initsum(matrix_t* obj)
 {
     int* tsum = (int*)mmap(NULL, (obj->dim * 2 - 1) * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-    if (tsum == MAP_FAILED)
+    if (unlikely(tsum == MAP_FAILED))
         return ERR_MMAP;
 
     if (obj->dim == 1) {
@@ -20,18 +24,18 @@ error_e initsum(matrix_t* obj)
 
     pid_t* pids = (pid_t*)mmap(NULL, (obj->dim - 1) * sizeof(pid_t), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     size_t* pidnum = (size_t*)mmap(NULL, sizeof(size_t), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-    if (pids == MAP_FAILED || pidnum == MAP_FAILED)
+    if (unlikely(pids == MAP_FAILED || pidnum == MAP_FAILED))
         return ERR_MMAP;
 
     pid_t mainpid = fork();
-    if (mainpid == -1)
+    if (unlikely(mainpid == BAD_VAL))
         return ERR_FORK;
     if (mainpid) {
         // main diagonal
         for (size_t i = 0; i < obj->dim; ++i)
             tsum[obj->dim - 1] += obj->matrix[i][i];
 
-        if (wait(0) == -1)
+        if (wait(0) == BAD_VAL)
             return ERR_PROC_TERM;
     } else {
         // diagonals with shifts
@@ -47,7 +51,7 @@ error_e initsum(matrix_t* obj)
                 for (size_t i = 0; i < obj->dim - 1; ++i) {
                     int wstatus;
                     waitpid(pids[i], &wstatus, 0);
-                    if (!WIFEXITED(wstatus))
+                    if (unlikely(!WIFEXITED(wstatus)))
                         return ERR_PROC_TERM;
                 }
 
@@ -57,13 +61,13 @@ error_e initsum(matrix_t* obj)
                 *pidnum += 1;
 
                 pid_t tpid = fork();
-                if (tpid == -1)
+                if (unlikely(tpid == BAD_VAL))
                     return ERR_PROC_TERM;
                 if (tpid) {
                     for (size_t i = 0; i + shift < obj->dim; ++i)
                         tsum[(obj->dim - 1) + shift] += obj->matrix[i][i + shift];
 
-                    if (wait(0) == -1)
+                    if (unlikely(wait(0) == BAD_VAL))
                         return ERR_PROC_TERM;
 
                     exit(0);
@@ -79,7 +83,7 @@ error_e initsum(matrix_t* obj)
 
     obj->dsum = tsum;
 
-    if (munmap(pids, (obj->dim - 1) * sizeof(pid_t)) == -1 || munmap(pidnum, sizeof(size_t)) == -1)
+    if (unlikely(munmap(pids, (obj->dim - 1) * sizeof(pid_t)) == BAD_VAL || munmap(pidnum, sizeof(size_t)) == BAD_VAL))
         return ERR_MMAP;
 
     return NO_ERROR;
