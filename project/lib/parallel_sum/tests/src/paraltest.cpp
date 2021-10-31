@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 
 extern "C" {
-#include "parser.h"
 #include "paral.h"
+#include "parser.h"
 }
 
 #include <stdio.h>

@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 
+#define BAD_VAL -1
+
 typedef struct {
     int** matrix;
     size_t dim;

@@ -37,5 +37,8 @@
 
 # Build
 build/*
-rebuildme.sh
 
+# My workflow files
+rebuildme.sh
+clangmeformat.sh
+tasks.txt

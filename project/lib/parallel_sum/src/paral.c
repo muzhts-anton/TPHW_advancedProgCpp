@@ -21,14 +21,20 @@ error_e initsum(matrix_t* obj)
     pid_t* pids = (pid_t*)mmap(NULL, (obj->dim - 1) * sizeof(pid_t), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     size_t* pidnum = (size_t*)mmap(NULL, sizeof(size_t), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     if (pids == MAP_FAILED || pidnum == MAP_FAILED)
-        return ERR_MMAP; // TODO:handle the errors
+        return ERR_MMAP;
 
-    if (fork()) {
-        // mid main
+    pid_t mainpid = fork();
+    if (mainpid == -1)
+        return ERR_FORK;
+    if (mainpid) {
+        // main diagonal
         for (size_t i = 0; i < obj->dim; ++i)
             tsum[obj->dim - 1] += obj->matrix[i][i];
-        wait(0);
+
+        if (wait(0) == -1)
+            return ERR_PROC_TERM;
     } else {
+        // diagonals with shifts
         size_t shift = 1;
         while (shift < obj->dim) {
             pid_t pid = fork();
@@ -38,17 +44,28 @@ error_e initsum(matrix_t* obj)
                     continue;
                 }
 
-                for (size_t i = 0; i < obj->dim - 1; ++i)
-                    waitpid(pids[i], NULL, 0);
+                for (size_t i = 0; i < obj->dim - 1; ++i) {
+                    int wstatus;
+                    waitpid(pids[i], &wstatus, 0);
+                    if (!WIFEXITED(wstatus))
+                        return ERR_PROC_TERM;
+                }
+
                 exit(0);
             } else {
                 pids[*pidnum] = pid;
                 *pidnum += 1;
-                if (fork()) {
+
+                pid_t tpid = fork();
+                if (tpid == -1)
+                    return ERR_PROC_TERM;
+                if (tpid) {
                     for (size_t i = 0; i + shift < obj->dim; ++i)
                         tsum[(obj->dim - 1) + shift] += obj->matrix[i][i + shift];
 
-                    wait(0);
+                    if (wait(0) == -1)
+                        return ERR_PROC_TERM;
+
                     exit(0);
                 } else {
                     for (size_t i = 0; i + shift < obj->dim; ++i)
@@ -62,8 +79,8 @@ error_e initsum(matrix_t* obj)
 
     obj->dsum = tsum;
 
-    munmap(pids, (obj->dim - 1) * sizeof(pid_t));
-    munmap(pidnum, sizeof(size_t));
+    if (munmap(pids, (obj->dim - 1) * sizeof(pid_t)) == -1 || munmap(pidnum, sizeof(size_t)) == -1)
+        return ERR_MMAP;
 
-    return 0;
+    return NO_ERROR;
 }
