@@ -13,7 +13,8 @@ enable_testing()
 
 add_subdirectory(project/lib/sequential_sum)
 add_subdirectory(project/lib/matfile)
+add_subdirectory(project/lib/parallel_sum)
 
 add_executable(yoyo project/src/main.c)
 
-target_link_libraries(yoyo parser stat)
+target_link_libraries(yoyo parser paral)

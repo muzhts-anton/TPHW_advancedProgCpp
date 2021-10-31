@@ -1,5 +1,5 @@
-#ifndef STAT_H
-#define STAT_H
+#ifndef PARAL_H
+#define PARAL_H
 
 #include "parser.h"
 

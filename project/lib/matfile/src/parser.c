@@ -6,13 +6,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-/*
-1 2 3\n
-4 5 6\n
-7 8 9\n
-\n
-*/
-
 static size_t getsize(char* matrix)
 {
     if (matrix == NULL)
@@ -69,7 +62,7 @@ matrix_t* getmatrix(const char filename[])
 
     struct stat buff;
     fstat(matfd, &buff);
-    char* matfile = mmap(NULL, buff.st_size, PROT_READ, MAP_PRIVATE, matfd, 0);
+    char* matfile = (char*)mmap(NULL, buff.st_size, PROT_READ, MAP_PRIVATE, matfd, 0);
 
     matrix_t* tmp = (matrix_t*)malloc(sizeof(matrix_t));
     tmp->dim = getsize(matfile);
@@ -89,8 +82,8 @@ matrix_t* getmatrix(const char filename[])
 
 void deinit(matrix_t* obj)
 {
-    if (obj->dsum) {
-        free(obj->dsum);
+    if (obj->dsum && obj->dim > 0) {
+        munmap(obj->dsum, (2 * obj->dim - 1) * sizeof(int));
         obj->dsum = NULL;
     }
     if (obj->matrix) {
