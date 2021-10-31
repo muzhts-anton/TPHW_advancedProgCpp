@@ -9,11 +9,18 @@
 error_e initsum(matrix_t* obj)
 {
     int* tsum = (int*)mmap(NULL, (obj->dim * 2 - 1) * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+    if (tsum == MAP_FAILED)
+        return ERR_MMAP;
+
+    if (obj->dim == 1) {
+        tsum[0] = obj->matrix[0][0];
+        obj->dsum = tsum;
+        return NO_ERROR;
+    }
 
     pid_t* pids = (pid_t*)mmap(NULL, (obj->dim - 1) * sizeof(pid_t), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     size_t* pidnum = (size_t*)mmap(NULL, sizeof(size_t), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-
-    if (tsum == MAP_FAILED || pids == MAP_FAILED || pidnum == MAP_FAILED)
+    if (pids == MAP_FAILED || pidnum == MAP_FAILED)
         return ERR_MMAP; // TODO:handle the errors
 
     if (fork()) {
