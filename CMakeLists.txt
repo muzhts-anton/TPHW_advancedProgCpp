@@ -17,4 +17,4 @@ add_subdirectory(project/lib/parallel_sum)
 
 add_executable(yoyo project/src/main.c)
 
-target_link_libraries(yoyo parser paral)
+target_link_libraries(yoyo parser paral stat)
