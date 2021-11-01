@@ -1,7 +1,7 @@
 #include "parser.h"
 
-//#include "stat.h"
-#include "paral.h"
+#include "stat.h"
+//#include "paral.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 
     clock_gettime(CLOCK_MONOTONIC, &start);
 
-
+    // block content
     matrix_t* testmat = getmatrix(argv[1]);
     initsum(testmat);
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 
     deinit(testmat);
     free(testmat);
-
+    // endblock
 
     clock_gettime(CLOCK_MONOTONIC, &finish);
 

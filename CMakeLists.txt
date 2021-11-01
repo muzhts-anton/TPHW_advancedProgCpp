@@ -8,6 +8,8 @@ project(pro)
 # add_compile_options(-fno-omit-frame-pointer -fsanitize=address)
 # add_link_options(-fsanitize=address)
 
+# add_compile_options(-Wall -Werror -Wpedantic)
+
 find_package(GTest)
 enable_testing()
 

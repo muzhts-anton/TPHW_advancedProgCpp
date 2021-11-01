@@ -83,7 +83,7 @@ matrix_t* getmatrix(const char filename[])
     else
         tmp->matrix = NULL;
 
-    if (unlikely((matfile, buff.st_size) == BAD_VAL))
+    if (unlikely(munmap(matfile, buff.st_size) == BAD_VAL))
         return NULL;
 
     if (unlikely(close(matfd)))

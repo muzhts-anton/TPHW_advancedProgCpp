@@ -42,3 +42,5 @@ build/*
 rebuildme.sh
 clangmeformat.sh
 tasks.txt
+paral_rez.txt
+stat_rez.txt
