@@ -1,4 +1,4 @@
-add_library(paral STATIC src/paral.c)
+add_library(paral SHARED src/paral.c)
 
 target_include_directories(paral PUBLIC include)
 target_link_libraries(paral PUBLIC parser)
