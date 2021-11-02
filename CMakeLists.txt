@@ -2,16 +2,21 @@ cmake_minimum_required(VERSION 3.16)
 
 project(pro)
 
-# add_compile_options(--coverage)
-# add_link_options(--coverage)
+option(COVERAGE "To get a test coverage" OFF)
+if(COVERAGE)
+    add_compile_options(--coverage)
+    add_link_options(--coverage)
+endif()
 
-# add_compile_options(-fno-omit-frame-pointer -fsanitize=address)
-# add_link_options(-fsanitize=address)
+option(SANITAIZE "To get sanitaize test" OFF)
+if(SANITAIZE)
+    add_compile_options(-fno-omit-frame-pointer -fsanitize=address)
+    add_link_options(-fsanitize=address)
+endif()
 
 add_compile_options(-Wall -Werror -Wpedantic)
 
 option(BUILD_PARAL "Build with parallel library" OFF)
-
 if(BUILD_PARAL)
     add_compile_options(-DBUILD_PARAL)
 endif()
