@@ -8,7 +8,13 @@ project(pro)
 # add_compile_options(-fno-omit-frame-pointer -fsanitize=address)
 # add_link_options(-fsanitize=address)
 
-# add_compile_options(-Wall -Werror -Wpedantic)
+add_compile_options(-Wall -Werror -Wpedantic)
+
+option(BUILD_PARAL "Build with parallel library" OFF)
+
+if(BUILD_PARAL)
+    add_compile_options(-DBUILD_PARAL)
+endif()
 
 find_package(GTest)
 enable_testing()
@@ -19,4 +25,8 @@ add_subdirectory(project/lib/parallel_sum)
 
 add_executable(yoyo project/src/main.c)
 
-target_link_libraries(yoyo parser paral stat)
+if(BUILD_PARAL)
+    target_link_libraries(yoyo parser paral)
+else()
+    target_link_libraries(yoyo parser stat)
+endif()

@@ -1,7 +1,10 @@
 #include "parser.h"
 
+#ifdef BUILD_PARAL
+#include "paral.h"
+#else
 #include "stat.h"
-//#include "paral.h"
+#endif
 
 #include <time.h>
 #include <stdio.h>
@@ -12,7 +15,7 @@ int main(int argc, char* argv[])
     double elapsed;
 
     matrix_t* testmat = getmatrix(argv[1]);
-    printf("%ld\n", testmat->dim);
+    printf("dimension: %ld\n", testmat->dim);
 
     clock_gettime(CLOCK_MONOTONIC, &start);
 
