@@ -11,10 +11,12 @@ int main(int argc, char* argv[])
     struct timespec start, finish;
     double elapsed;
 
+    matrix_t* testmat = getmatrix(argv[1]);
+    printf("%ld\n", testmat->dim);
+
     clock_gettime(CLOCK_MONOTONIC, &start);
 
     // block content
-    matrix_t* testmat = getmatrix(argv[1]);
     initsum(testmat);
 
     for (size_t i = 0; i < 2 * testmat->dim - 1; ++i)

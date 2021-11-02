@@ -9,7 +9,6 @@
 #define unlikely(expr) __builtin_expect(!!(expr), 0)
 #define likely(expr) __builtin_expect(!!(expr), 1)
 
-
 static size_t getsize(char* matrix)
 {
     if (unlikely(!matrix))
@@ -25,24 +24,16 @@ static size_t getsize(char* matrix)
     return size + 1;
 }
 
-static int* getrow(char* matrix, size_t offset, size_t msize)
+static int* getrow(char** matrix, const size_t msize)
 {
-    size_t rowcount = 0;
-    while (rowcount != offset) {
-        while (*matrix != '\n')
-            ++matrix;
-        ++matrix;
-        ++rowcount;
-    }
-
     int* row = (int*)malloc(msize * sizeof(int));
-    if(unlikely(!row))
+    if (unlikely(!row))
         return NULL;
-    
+
     for (size_t i = 0; i < msize; ++i) {
-        char* tmp = matrix;
-        row[i] = strtol(matrix, &tmp, 10);
-        matrix = tmp + 1;
+        char* tmp = *matrix;
+        row[i] = strtol(*matrix, &tmp, 10);
+        *matrix = tmp + 1;
     }
 
     return row;
@@ -51,11 +42,12 @@ static int* getrow(char* matrix, size_t offset, size_t msize)
 static int** parsefile(char* matfile, size_t msize)
 {
     int** matrix = (int**)malloc(msize * sizeof(int*));
-    if(unlikely(!matrix))
+    if (unlikely(!matrix))
         return NULL;
-    
+
+    char* s = matfile;
     for (size_t i = 0; i < msize; ++i) {
-        if(unlikely(!(matrix[i] = getrow(matfile, i, msize))))
+        if (unlikely(!(matrix[i] = getrow(&s, msize))))
             return NULL;
     }
     return matrix;
