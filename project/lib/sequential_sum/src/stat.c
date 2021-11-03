@@ -6,7 +6,6 @@
 #define unlikely(expr) __builtin_expect(!!(expr), 0)
 #define likely(expr) __builtin_expect(!!(expr), 1)
 
-
 error_e initsum(matrix_t* obj)
 {
     int* tsum = (int*)mmap(NULL, (obj->dim * 2 - 1) * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
