@@ -1,12 +1,18 @@
 version: 2
 name: CI
 
-on: [push]
+on:
+  push:
+    branches: [ task2-solution ]
+  pull_request:
+    branches:
+     - task2-solution
+     - task2
 
 jobs:
   build:
-    name: build
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
