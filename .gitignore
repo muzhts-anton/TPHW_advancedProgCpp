@@ -41,6 +41,4 @@ build/*
 # My workflow files
 rebuildme.sh
 clangmeformat.sh
-tasks.txt
-paral_rez.txt
-stat_rez.txt
+.travis.yml
