@@ -1,7 +1,19 @@
-name: GitHub Actions Demo
-on: [push]
+name: CI
+
+on:
+  push:
+    branches: [ task2-solution ]
+  pull_request:
+    branches:
+     - task2-solution
+     - task2
+  
 jobs:
-  Explore-GitHub-Actions:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo 123
+      - uses: actions/checkout@v2
+
+      - name: testing
+        run: echo lmao
