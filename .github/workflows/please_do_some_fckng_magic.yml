@@ -33,7 +33,7 @@ jobs:
       #     make -C build_p
       #     sudo apt install -y cppcheck
       #     cppcheck project/src/* project/lib/parallel_sum/* project/lib/sequential_sum/* --error-exitcode=1
-      name: Coverage
+      - name: Coverage
         run: |
           sudo apt install -y lcov
           cmake -B build_cov -DCOVERAGE=1
