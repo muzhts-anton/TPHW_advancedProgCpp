@@ -41,4 +41,3 @@ build/*
 # My workflow files
 rebuildme.sh
 clangmeformat.sh
-.travis.yml
