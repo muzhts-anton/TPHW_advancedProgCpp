@@ -35,6 +35,7 @@ jobs:
       #     cppcheck project/src/* project/lib/parallel_sum/* project/lib/sequential_sum/* --error-exitcode=1
       - name: Coverage
         run: |
+          sudo apt install -y libgtest-dev
           sudo apt install -y lcov
           cmake -B build_cov -DCOVERAGE=1
           cd build_cov/
