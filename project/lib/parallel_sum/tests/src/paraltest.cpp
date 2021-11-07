@@ -5,6 +5,11 @@ extern "C" {
 #include "parser.h"
 }
 
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include <stdio.h>
 
 TEST(PARAL, Assert_1)
@@ -15,7 +20,12 @@ TEST(PARAL, Assert_1)
     fwrite(matrix, (int)sizeof(matrix) - 1, 1, testfile);
     fclose(testfile);
 
-    matrix_t* test = getmatrix(filename);
+    int matfd = open(filename, O_RDONLY);
+
+    matrix_t* test = getmatrix(matfd);
+
+    close(matfd);
+
     initsum(test);
 
     EXPECT_EQ(test->dsum[0], 1);
@@ -32,7 +42,12 @@ TEST(PARAL, Assert_2)
     fwrite(matrix, (int)sizeof(matrix) - 1, 1, testfile);
     fclose(testfile);
 
-    matrix_t* test = getmatrix(filename);
+    int matfd = open(filename, O_RDONLY);
+
+    matrix_t* test = getmatrix(matfd);
+
+    close(matfd);
+
     initsum(test);
 
     EXPECT_EQ(test->dsum[0], 7);

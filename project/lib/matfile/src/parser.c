@@ -11,7 +11,7 @@
 
 static size_t getsize(char* matrix)
 {
-    if (unlikely(!matrix))
+    if (!matrix)
         return 0;
 
     size_t size = 0;
@@ -27,7 +27,7 @@ static size_t getsize(char* matrix)
 static int* getrow(char** matrix, const size_t msize)
 {
     int* row = (int*)malloc(msize * sizeof(int));
-    if (unlikely(!row))
+    if (!row)
         return NULL;
 
     for (size_t i = 0; i < msize; ++i) {
@@ -39,46 +39,39 @@ static int* getrow(char** matrix, const size_t msize)
     return row;
 }
 
-static int** parsefile(char* matfile, size_t msize)
+static int** parsefile(char* matfile, int** matrix, size_t msize)
 {
-    int** matrix = (int**)malloc(msize * sizeof(int*));
-    if (unlikely(!matrix))
-        return NULL;
-
     char* s = matfile;
     for (size_t i = 0; i < msize; ++i) {
-        if (unlikely(!(matrix[i] = getrow(&s, msize))))
+        if (!(matrix[i] = getrow(&s, msize)))
             return NULL;
     }
     return matrix;
 }
 
-matrix_t* getmatrix(const char filename[])
+matrix_t* getmatrix(int matfd)
 {
-    int matfd = open(filename, O_RDONLY);
-    if (unlikely(matfd == BAD_VAL))
-        return NULL;
-
     struct stat buff;
     fstat(matfd, &buff);
     char* matfile = (char*)mmap(NULL, buff.st_size, PROT_READ, MAP_PRIVATE, matfd, 0);
-    if (unlikely(matfile == MAP_FAILED))
+    if (matfile == MAP_FAILED)
         return NULL;
 
     matrix_t* tmp = (matrix_t*)malloc(sizeof(matrix_t));
-    if (unlikely(!tmp))
+    if (!tmp)
         return NULL;
 
     tmp->dsum = NULL;
-    if (likely(tmp->dim = getsize(matfile)))
-        tmp->matrix = parsefile(matfile, tmp->dim);
-    else
+    if (likely(tmp->dim = getsize(matfile))) {
+        int** matrix = (int**)malloc(tmp->dim * sizeof(int*));
+        if (!matrix)
+            return NULL;
+
+        tmp->matrix = parsefile(matfile, matrix, tmp->dim);
+    } else
         tmp->matrix = NULL;
 
-    if (unlikely(munmap(matfile, buff.st_size) == BAD_VAL))
-        return NULL;
-
-    if (unlikely(close(matfd)))
+    if (munmap(matfile, buff.st_size) == BAD_VAL)
         return NULL;
 
     return tmp;

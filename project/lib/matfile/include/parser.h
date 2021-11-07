@@ -11,7 +11,7 @@ typedef struct {
     int* dsum;
 } matrix_t;
 
-matrix_t* getmatrix(const char filename[]);
+matrix_t* getmatrix(int matfd);
 void deinit(matrix_t* obj);
 
 #endif

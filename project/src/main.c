@@ -9,13 +9,32 @@
 #include <stdio.h>
 #include <time.h>
 
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#define ERR_NUMARGS 10
+#define ERR_FILE 11
+
+
 int main(int argc, char* argv[])
 {
+    if (argc != 2)
+        return ERR_NUMARGS;
+    
+    int matfd = open(argv[1], O_RDONLY);
+    if (matfd == BAD_VAL)
+        return ERR_FILE;
+
+    matrix_t* testmat = getmatrix(matfd);
+    printf("dimension: %ld\n", testmat->dim);
+
+    if (close(matfd))
+        return ERR_FILE;
+
     struct timespec start, finish;
     double elapsed;
-
-    matrix_t* testmat = getmatrix(argv[1]);
-    printf("dimension: %ld\n", testmat->dim);
 
     clock_gettime(CLOCK_MONOTONIC, &start);
 

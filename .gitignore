@@ -38,6 +38,9 @@
 # Build
 build/
 build_cov/
+build_p/
+build_s/
+localdata/
 
 # My workflow files
 rebuildme.sh
