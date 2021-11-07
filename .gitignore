@@ -36,7 +36,8 @@
 .idea
 
 # Build
-build/*
+build/
+build_cov/
 
 # My workflow files
 rebuildme.sh
