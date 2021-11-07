@@ -22,7 +22,9 @@ jobs:
           make -C build/
       - name: GTest
         run: |
-          - cd build
+          - pwd
+          - ls -la
+          - cd build/
           - ctest --output-on-failure
           - cd ..
       - name: Sanitaize
