@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ task2-solution ]
+  pull_request:
+    branches:
+     - task2-solution
+     - task2
+  
+jobs:
+  task2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        run: |
+          sudo apt install -y libgtest-dev
+          cmake -B build/
+          make -C build/
+      - name: GTest
+        run: |
+          cd build/
+          ctest --output-on-failure
+          cd ..
+      - name: Sanitaize
+        run: |
+          cmake -B build_s -DSANITAIZE=1
+          cmake -B build_p -DSANITAIZE=1 -DBUILD_PARAL=1
+          make -C build_s
+          make -C build_p
+          sudo apt install -y cppcheck
+          cppcheck project/src/* project/lib/parallel_sum/* project/lib/sequential_sum/* --error-exitcode=1
+      - name: Coverage
+        run: |
+          sudo apt install -y lcov
+          cmake -B build_cov -DCOVERAGE=1
+          cd build_cov/
+          make all test
+          lcov --directory . --capture --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
+          lcov --list coverage.info
+          bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
