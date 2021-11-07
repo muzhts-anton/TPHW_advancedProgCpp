@@ -15,5 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: testing
-        run: echo lmao
+      - name: Build
+        run: |
+          sudo apt install -y libgtest-dev
+          cmake -B build/
+          make -C build/
+
