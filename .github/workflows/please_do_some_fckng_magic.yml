@@ -20,4 +20,18 @@ jobs:
           sudo apt install -y libgtest-dev
           cmake -B build/
           make -C build/
-
+      - name: GTest
+        run: |
+          - cd build
+          - ctest --output-on-failure
+          - cd ..
+      - name: Sanitaize
+        run: |
+          - cmake -B build_s -DSANITAIZE=1
+          - cmake -B build_p -DSANITAIZE=1 -DBUILD_PARAL=1
+          - make -C build_s
+          - make -C build_p
+          - cppcheck project/src/* project/lib/parallel_sum/* project/lib/sequential_sum/* --error-exitcode=1
+          - echo -e "1 2 3\n4 5 6\n7 8 9\n\n" > tmp.txt
+          - valgrind ./build_s/yoyo tmp.txt --leak-check=full --tool=memcheck
+          - valgrind ./build_p/yoyo tmp.txt --leak-check=full --tool=memcheck
