@@ -9,7 +9,7 @@ on:
      - task2
   
 jobs:
-  build:
+  task2:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,11 +22,7 @@ jobs:
           make -C build/
       - name: GTest
         run: |
-          - pwd
-          - ls -la
-          - cd build/
-          - ctest --output-on-failure
-          - cd ..
+          - make test -C build/
       - name: Sanitaize
         run: |
           - cmake -B build_s -DSANITAIZE=1
