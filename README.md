@@ -1,2 +1,3 @@
-# TPHW_advancedProgCpp
-A repository of homework of a TechnoPark course advanced programming on C and C++ (sem 1)
+# Technopark (VK Education). 1 semester. Homework for the C++ course.
+
+Each part of the homework is in the corresponding branch.
